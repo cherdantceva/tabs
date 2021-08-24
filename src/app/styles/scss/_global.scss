@@ -1,0 +1,41 @@
+@font-face {
+  font-family: 'Gilroy';
+  src: url('../../assets/fonts/Gilroy/Gilroy-Regular.woff2') format('woff2'),
+  url('../../assets/fonts/Gilroy/Gilroy-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('../../assets/fonts/Inter/Inter-Medium.woff2') format('woff2'),
+  url('../../assets/fonts/Inter/Inter-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+html {
+  height: 100%;
+  font-size: 0.52vw;
+  @media (max-width: 1024px) {
+    font-size: 2.78vw;
+  }
+}
+
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  overflow: hidden;
+  background: #F2F4F7;
+  color: white;
+  touch-action: none;
+}
+
+* {
+  box-sizing: border-box;
+}

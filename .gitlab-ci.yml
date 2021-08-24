@@ -1,0 +1,46 @@
+stages:
+  - build
+  - deploy
+
+.build:
+  stage: build
+  image: node:14
+  before_script:
+    - npm config set unsafe-perm true
+    - npm i 
+  artifacts:
+    paths:
+      - build/  
+  tags:
+    - docker
+    - linux
+
+.deploy:
+  image: gitlab.boqpod.io:5050/docker/cloud-sdk:latest
+  stage: deploy
+  script:
+    - aws s3 sync build ${AWS_S3_BUCKET}
+    - aws cloudfront create-invalidation --distribution-id ${AWS_CLOUDFRONT_DISTRIBUTION_ID} --paths /index.html
+  tags:
+    - docker
+    - linux
+
+build_development:
+  extends: .build
+  variables:
+    CI: "false"
+  script:
+    - npm run build
+  only:
+    - dev
+
+deploy_development:
+  environment:
+    name: "development"
+    url: https://dev.laolab.org
+  extends: .deploy
+  variables:
+    AWS_CLOUDFRONT_DISTRIBUTION_ID: E21JKTYI0H732U
+    AWS_S3_BUCKET: s3://dev.laolab.org
+  only:
+    - dev
